@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML 签到系统</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 36px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        form input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        form button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button[type="submit"]:hover {
+            background-color: #0062cc;
+        }
+        .success {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #d4edda;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #155724;
+            font-weight: bold;
+        }
+        .error {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f8d7da;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #721c24;
+            font-weight: bold;
+        }
+        .checkin-list {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .checkin-list h2 {
+            margin-top: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .checkin-list ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .checkin-list li {
+            padding: 10px;
+            border-bottom: 1px solid #f5f5f5;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML 签到系统</h1>
+    <form onsubmit="return checkIn()">
+        <label for="name">姓名：</label>
+        <input type="text" name="name" id="name" required>
+        <button type="submit">签到</button>
+    </form>
+    <div id="result"></div>
+    <div class="checkin-list">
+        <h2>已签到名单</h2>
+        <ul id="checkin-list"></ul>
+    </div>
+    <script>
+        // 签到名单
+        var checkInList = [];
+        // 签到
+        function checkIn() {
+            // 获取表单数据
+            var name = document.getElementById("name").value;
+            // 判断是否已经签到
+            if (checkInList.indexOf(name) != -1) {
+                // 已经签到，显示错误信息
+                document.getElementById("result").innerHTML = "<div class='error'>请勿重复签到！</div>";
+            } else {
+                // 未签到，添加到签到名单中
+                checkInList.push(name);
+                // 显示成功信息
+                document.getElementById("result").innerHTML = "<div class='success'>签到成功！</div>";
+                // 更新已签到列表
+                updateCheckInList();
+            }
+            // 清空表单
+            document.getElementById("name").value = "";
+            // 阻止表单提交
+            return false;
+        }
+        // 更新已签到列表
+        function updateCheckInList() {
+            var list = document.getElementById("checkin-list");
+            list.innerHTML = "";
+            for (var i = 0; i < checkInList.length; i++) {
+                var item = document.createElement("li");
+                item.innerText = checkInList[i];
+                list.appendChild(item);
+            }
+        }
+    </script>
+</body>
+</html>
